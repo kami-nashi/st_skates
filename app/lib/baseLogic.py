@@ -28,7 +28,7 @@ def dbconnect(sql,vTUP=None):
 
 def skaterListBlades(uSkaterUUID):
     q = '''
-    select fsBlades.bladesName, fsBlades.bladesModel, fsBlades.bladesSize, fsBlades.bladesPurchAmount, fsBlades.bladesPurchDate, sConfig.aSkateConfigID
+    select fsBlades.bladesName, fsBlades.bladesModel, fsBlades.bladesSize, fsBlades.bladesPurchAmount, DATE_FORMAT(fsBlades.bladesPurchDate, "%%y-%%m-%%d") as bladesDate, sConfig.aSkateConfigID
     from uSkateConfig sConfig
     INNER JOIN uSkaterBlades fsBlades ON sConfig.uSkaterUUID = fsBlades.uSkaterUUID and sConfig.uSkaterBladesID = fsBlades.bladeID
 	INNER JOIN uSkaterConfig fsConfig ON sConfig.uSkaterUUID = fsConfig.uSkaterUUID
@@ -39,7 +39,7 @@ def skaterListBlades(uSkaterUUID):
 
 def skaterListBoots(uSkaterUUID):
     q = '''
-    select fsBoots.bootsName, fsBoots.bootsModel, fsBoots.bootsSize, fsBoots.bootsPurchAmount, fsBoots.bootsPurchDate, sConfig.aSkateConfigID
+    select fsBoots.bootsName, fsBoots.bootsModel, fsBoots.bootsSize, fsBoots.bootsPurchAmount, DATE_FORMAT(fsBoots.bootsPurchDate, "%%y-%%m-%%d") as bootsDate, sConfig.aSkateConfigID
     from uSkateConfig sConfig
     INNER JOIN uSkaterBoots fsBoots ON sConfig.uSkaterUUID = fsBoots.uSkaterUUID and sConfig.uSkaterBootsID = fsBoots.bootID
 	INNER JOIN uSkaterConfig fsConfig ON sConfig.uSkaterUUID = fsConfig.uSkaterUUID
