@@ -26,6 +26,28 @@ def dbconnect(sql,vTUP=None):
    con.close()
    return tables
 
+def skaterListBlades(uSkaterUUID):
+    q = '''
+    select fsBlades.bladesName, fsBlades.bladesModel, fsBlades.bladesSize, fsBlades.bladesPurchAmount, fsBlades.bladesPurchDate, sConfig.aSkateConfigID
+    from uSkateConfig sConfig
+    INNER JOIN uSkaterBlades fsBlades ON sConfig.uSkaterUUID = fsBlades.uSkaterUUID and sConfig.uSkaterBladesID = fsBlades.bladeID
+	INNER JOIN uSkaterConfig fsConfig ON sConfig.uSkaterUUID = fsConfig.uSkaterUUID
+    WHERE sConfig.uSkaterUUID = %s
+    '''
+    results = dbconnect(q,uSkaterUUID)
+    return results
+
+def skaterListBoots(uSkaterUUID):
+    q = '''
+    select fsBoots.bootsName, fsBoots.bootsModel, fsBoots.bootsSize, fsBoots.bootsPurchAmount, fsBoots.bootsPurchDate, sConfig.aSkateConfigID
+    from uSkateConfig sConfig
+    INNER JOIN uSkaterBoots fsBoots ON sConfig.uSkaterUUID = fsBoots.uSkaterUUID and sConfig.uSkaterBootsID = fsBoots.bootID
+	INNER JOIN uSkaterConfig fsConfig ON sConfig.uSkaterUUID = fsConfig.uSkaterUUID
+    WHERE sConfig.uSkaterUUID = %s
+    '''
+    results = dbconnect(q,uSkaterUUID)
+    return results
+
 def skaterListSkates(uSkaterUUID):
     q = '''
     select fsBoots.bootsName, fsBoots.bootsModel, fsBlades.bladesName, fsBlades.bladesModel, sConfig.aSkateConfigID
@@ -80,3 +102,13 @@ def skaterListHours(uSkaterUUID):
     '''
     results = dbconnect(q,uSkaterUUID)
     return results
+
+def buildMasterResponse(uSkaterUUID):
+    skatesActive = skaterActiveMeta(uSkaterUUID)
+    skatesList = skaterListSkates(uSkaterUUID)
+    skatesBoots = skaterListBoots(uSkaterUUID)
+    skatesBlades = skaterListBlades(uSkaterUUID)
+
+    skates = {'active': skatesActive, 'list': skatesList, 'skatesBoots': skatesBoots, 'skatesBlades': skatesBlades}
+
+    return skates

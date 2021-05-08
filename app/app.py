@@ -9,24 +9,12 @@ app.config['SECRET_KEY'] = appConfig
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>Look</p>"
+    return "<h1>Your destination is not here ... </p>"
 
-skatesActive = base.skaterActiveMeta(1)
-skatesList = base.skaterListSkates(1)
-
-skates = {'active': skatesActive, 'list': skatesList}
-
-@app.route('/api/v1/resources/skates/master', methods=['GET'])
-def api_master():
+@app.route('/api/v1/resources/skates/master/<int:uSkaterUUID>', methods=['GET'])
+def api_master(uSkaterUUID):
+    skates = base.buildMasterResponse(uSkaterUUID)
     return jsonify(skates)
-
-@app.route('/api/v1/resources/skates/active', methods=['GET'])
-def api_active():
-    return jsonify(skatesActive)
-
-@app.route('/api/v1/resources/skates/list', methods=['GET'])
-def api_list():
-    return jsonify(skatesList)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5021, use_reloader=True, debug=True)
