@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request, jsonify
+import json
 import configparser as conf
 import lib.baseLogic as base
 
@@ -14,7 +15,7 @@ def home():
 @app.route('/api/v1/resources/skates/master/<int:uSkaterUUID>', methods=['GET'])
 def api_master(uSkaterUUID):
     skates = base.buildMasterResponse(uSkaterUUID)
-    return jsonify(skates)
+    return skates
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5021, use_reloader=True, debug=True)

@@ -1,4 +1,5 @@
 import configparser as conf
+from flask import jsonify
 import pymysql
 
 def baseConfig():
@@ -108,7 +109,15 @@ def buildMasterResponse(uSkaterUUID):
     skatesList = skaterListSkates(uSkaterUUID)
     skatesBoots = skaterListBoots(uSkaterUUID)
     skatesBlades = skaterListBlades(uSkaterUUID)
-
     skates = {'active': skatesActive, 'list': skatesList, 'skatesBoots': skatesBoots, 'skatesBlades': skatesBlades}
+    return jsonify(skates)
 
-    return skates
+def buildMasterResponseTest(uSkaterUUID):
+    #skatesActive = skaterActiveMeta(uSkaterUUID)
+    #skatesList = skaterListSkates(uSkaterUUID)
+    #skatesBoots = skaterListBoots(uSkaterUUID)
+    #skatesBlades = skaterListBlades(uSkaterUUID)
+    #skates = {'active': skatesActive, 'list': skatesList, 'skatesBoots': skatesBoots, 'skatesBlades': skatesBlades}
+    skatesActive = skaterActiveMeta(uSkaterUUID)
+    print(jsonify({'active':skatesActive}))
+    return jsonify({'active':skatesActive})
