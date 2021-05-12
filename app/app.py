@@ -17,5 +17,16 @@ def api_master(uSkaterUUID):
     skates = base.buildMasterResponse(uSkaterUUID)
     return skates
 
+@app.route('/api/v1/resources/skates/active/<int:uSkaterUUID>', methods=['GET'])
+def api_active(uSkaterUUID):
+    skates = base.buildActiveResponse(uSkaterUUID)
+    return jsonify(skates)
+
+@app.route('/api/v1/resources/skates/list/<int:uSkaterUUID>', methods=['GET'])
+def api_list(uSkaterUUID):
+    skates = base.buildListResponse(uSkaterUUID)
+    return jsonify(skates)
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5021, use_reloader=True, debug=True)

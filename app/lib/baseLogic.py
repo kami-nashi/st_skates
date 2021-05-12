@@ -112,6 +112,14 @@ def buildMasterResponse(uSkaterUUID):
     skates = {'active': skatesActive, 'list': skatesList, 'skatesBoots': skatesBoots, 'skatesBlades': skatesBlades}
     return jsonify(skates)
 
+def buildActiveResponse(uSkaterUUID):
+    skatesActive = skaterActiveMeta(uSkaterUUID)
+    return skatesActive
+
+def buildListResponse(uSkaterUUID):
+    skatesList = skaterListSkates(uSkaterUUID)
+    return skatesList
+
 def buildMasterResponseTest(uSkaterUUID):
     #skatesActive = skaterActiveMeta(uSkaterUUID)
     #skatesList = skaterListSkates(uSkaterUUID)
