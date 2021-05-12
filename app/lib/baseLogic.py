@@ -129,3 +129,40 @@ def buildMasterResponseTest(uSkaterUUID):
     skatesActive = skaterActiveMeta(uSkaterUUID)
     print(jsonify({'active':skatesActive}))
     return jsonify({'active':skatesActive})
+
+def addNewBoots(request_data):
+    uSkaterUUID = request_data['uSkaterUUID']
+
+    if len(request_data['bootsName']) == 0:
+        bootsName = 'Generic'
+    else:
+        bootsName = request_data['bootsName']
+
+    if len(request_data['bootsModel']) == 0:
+        bootsModel = 'Generic'
+    else:
+        bootsModel = request_data['bootsModel']
+
+    if len(request_data['bootsSize']) == 0:
+        bootsSize = '0'
+    else:
+        bootsSize = request_data['bootsSize']
+
+    if len(request_data['bootsPurchDate']) == 0:
+        bootsPurchDate = '0000-00-00'
+    else:
+        bootsPurchDate = request_data['bootsPurchDate']
+
+    if len(request_data['bootsPurchAmount']) == 0:
+        bootsPurchAmount = float(0.0)
+    else:
+        bootsPurchAmount = request_data['bootsPurchAmount']
+
+    bootsTuple = (bootsName, bootsModel, bootsSize, bootsPurchDate, bootsPurchAmount, uSkaterUUID)
+    bootsQuery = "INSERT INTO uSkaterBoots (bootsName, bootsModel, bootsSize, bootsPurchDate, bootsPurchAmount, uSkaterUUID, bootID) select %s, %s, %s, %s, %s, %s, max(bootID)+1 from uSkaterBoots;"
+    results = dbconnect(bootsQuery,bootsTuple)
+
+    # nice diagnostic check here
+    #results = '''{} {} boots, size {}, bought on {} for ${}'''.format(bootsName, bootsModel, bootsSize, bootsPurchDate, bootsPurchAmount)
+    #print(results)
+    return str(200)

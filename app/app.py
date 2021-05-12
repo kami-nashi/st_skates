@@ -27,6 +27,11 @@ def api_list(uSkaterUUID):
     skates = base.buildListResponse(uSkaterUUID)
     return jsonify(skates)
 
+@app.route('/api/v1/resources/skates/createBoots', methods=['POST'])
+def json_example():
+    request_data = request.get_json()
+    results = base.addNewBoots(request_data)
+    return results
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5021, use_reloader=True, debug=True)
