@@ -166,3 +166,36 @@ def addNewBoots(request_data):
     #results = '''{} {} boots, size {}, bought on {} for ${}'''.format(bootsName, bootsModel, bootsSize, bootsPurchDate, bootsPurchAmount)
     #print(results)
     return str(200)
+
+def addNewBlades(request_data):
+    uSkaterUUID = request_data['uSkaterUUID']
+
+    if len(request_data['bladesName']) == 0:
+        bladesName = 'Generic'
+    else:
+        bladesName = request_data['bladesName']
+
+    if len(request_data['bladesModel']) == 0:
+        bladesModel = 'Generic'
+    else:
+        bladesModel = request_data['bladesModel']
+
+    if len(request_data['bladesSize']) == 0:
+        bladesSize = '0'
+    else:
+        bladesSize = request_data['bladesSize']
+
+    if len(request_data['bladesPurchDate']) == 0:
+        bladesPurchDate = '0000-00-00'
+    else:
+        bladesPurchDate = request_data['bladesPurchDate']
+
+    if len(request_data['bladesPurchAmount']) == 0:
+        bladesPurchAmount = float(0.0)
+    else:
+        bladesPurchAmount = request_data['bladesPurchAmount']
+
+    bladesTuple = (bladesName, bladesModel, bladesSize, bladesPurchDate, bladesPurchAmount, uSkaterUUID)
+    bladesQuery = "INSERT INTO uSkaterBlades (bladesName, bladesModel, bladesSize, bladesPurchDate, bladesPurchAmount, uSkaterUUID, bladeID) select %s, %s, %s, %s, %s, %s, max(bladeID)+1 from uSkaterBlades;"
+    results = dbconnect(bladesQuery,bladesTuple)
+    return str(200)

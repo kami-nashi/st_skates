@@ -28,9 +28,15 @@ def api_list(uSkaterUUID):
     return jsonify(skates)
 
 @app.route('/api/v1/resources/skates/createBoots', methods=['POST'])
-def json_example():
+def createBoots():
     request_data = request.get_json()
     results = base.addNewBoots(request_data)
+    return results
+
+@app.route('/api/v1/resources/skates/createBlades', methods=['POST'])
+def createBlades():
+    request_data = request.get_json()
+    results = base.addNewBlades(request_data)
     return results
 
 if __name__ == "__main__":
