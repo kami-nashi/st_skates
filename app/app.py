@@ -1,4 +1,5 @@
 from flask import Flask
+
 from flask import request, jsonify
 import json
 import configparser as conf
@@ -26,6 +27,15 @@ def api_active(uSkaterUUID):
 def api_list(uSkaterUUID):
     skates = base.buildListResponse(uSkaterUUID)
     return jsonify(skates)
+
+@app.route('/api/v1/resources/skates/createSkates', methods=['POST', 'GET'])
+def createSkates():
+    dataSkaterID = request.form.get('uSkaterUUID')
+    dataBoots = request.form.get('boots')
+    dataBlades = request.form.get('blades')
+    data = (dataSkaterID, dataBlades, dataBoots)
+    base.addNewSkates(data)
+    return str(data)
 
 @app.route('/api/v1/resources/skates/createBoots', methods=['POST'])
 def createBoots():

@@ -199,3 +199,9 @@ def addNewBlades(request_data):
     bladesQuery = "INSERT INTO uSkaterBlades (bladesName, bladesModel, bladesSize, bladesPurchDate, bladesPurchAmount, uSkaterUUID, bladeID) select %s, %s, %s, %s, %s, %s, max(bladeID)+1 from uSkaterBlades;"
     results = dbconnect(bladesQuery,bladesTuple)
     return str(200)
+
+def addNewSkates(request_data):
+    print(request_data)
+    skatesQuery = "INSERT INTO uSkateConfig (uSkaterUUID, uSkaterBladesID, uSkaterBootsID, sType, sActive, aSkateConfigID) select %s, %s, %s, 1, 1, max(aSkateConfigID)+1 from uSkateConfig;"
+    results = dbconnect(skatesQuery,request_data)
+    return str(200)
