@@ -28,6 +28,16 @@ def api_list(uSkaterUUID):
     skates = base.buildListResponse(uSkaterUUID)
     return jsonify(skates)
 
+@app.route('/api/v1/resources/skates/listBoots/<int:uSkaterUUID>', methods=['GET'])
+def api_listBoots(uSkaterUUID):
+    skates = base.skaterListBoots(uSkaterUUID)
+    return jsonify(skates)
+
+@app.route('/api/v1/resources/skates/listBlades/<int:uSkaterUUID>', methods=['GET'])
+def api_listBlades(uSkaterUUID):
+    skates = base.skaterListBlades(uSkaterUUID)
+    return jsonify(skates)
+
 @app.route('/api/v1/resources/skates/createSkates', methods=['POST', 'GET'])
 def createSkates():
     dataSkaterID = request.form.get('uSkaterUUID')

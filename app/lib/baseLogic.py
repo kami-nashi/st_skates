@@ -40,7 +40,7 @@ def skaterListBlades(uSkaterUUID):
 
 def skaterListBoots(uSkaterUUID):
     q = '''
-    select fsBoots.bootsName, fsBoots.bootsModel, fsBoots.bootsSize, fsBoots.bootsPurchAmount, DATE_FORMAT(fsBoots.bootsPurchDate, "%%Y-%%m-%%d") as bootsDate, sConfig.aSkateConfigID
+    select DISTINCT fsBoots.bootsName, fsBoots.bootsModel, fsBoots.bootsSize, fsBoots.bootsPurchAmount, DATE_FORMAT(fsBoots.bootsPurchDate, "%%Y-%%m-%%d") as bootsDate
     from uSkateConfig sConfig
     INNER JOIN uSkaterBoots fsBoots ON sConfig.uSkaterUUID = fsBoots.uSkaterUUID and sConfig.uSkaterBootsID = fsBoots.bootID
 	INNER JOIN uSkaterConfig fsConfig ON sConfig.uSkaterUUID = fsConfig.uSkaterUUID
